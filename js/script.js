@@ -326,7 +326,7 @@ async function clickProgram() {
       errorMsg(e);
     }
   }
-  for (let i = 0; i < 4; i++) {
+  for (let i = 0; i < progress.length; i++) {
     firmware[i].disabled = false;
     offsets[i].disabled = false;
     progress[i].classList.add("hidden");
@@ -404,7 +404,7 @@ function convertJSON(chunk) {
 
 function toggleUIToolbar(show) {
   isConnected = show;
-  for (let i = 0; progress.length; i++) {
+  for (let i = 0; i < progress.length; i++) {
     progress[i].classList.add("hidden");
     progress[i].querySelector("div").style.width = "0";
   }
