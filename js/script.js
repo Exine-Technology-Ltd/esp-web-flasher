@@ -63,7 +63,7 @@ document.addEventListener("DOMContentLoaded", () => {
   logMsg("ESP Web Flasher loaded.");
 });
 
-function autoResetScanner(){
+async function autoResetScanner(){
   let ports = await navigator.serial.getPorts();
   for (let index = 0; index < ports.length; index++) {
       const info = ports[index].getInfo();    
