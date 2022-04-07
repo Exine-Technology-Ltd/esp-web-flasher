@@ -68,7 +68,7 @@ async function autoResetScanner(){
   for (let index = 0; index < ports.length; index++) {
       const info = ports[index].getInfo();    
       if(info.usbProductId == scannerFilter.usbProductId && info.usbVendorId == scannerFilter.usbVendorId){
-          alert("LTO Scanner Restting");
+          alert("LTO Scanner Resetting");
           await ports[index].open({ baudRate: 1200 });
       }
   }
@@ -302,7 +302,7 @@ async function clickProgram() {
   baudRate.disabled = true;
   butErase.disabled = true;
   butProgram.disabled = true;
-  for (let i = 0; i < 4; i++) {
+  for (let i = 0; i < progress.length; i++) {
     firmware[i].disabled = true;
     offsets[i].disabled = true;
   }
@@ -344,7 +344,7 @@ function getValidFiles() {
   // and will also return a list of files to program
   let validFiles = [];
   let offsetVals = [];
-  for (let i = 0; i < 4; i++) {
+  for (let i = 0; i < progress.length; i++) {
     let offs = parseInt(offsets[i].value, 16);
     if (firmware[i].files.length > 0 && !offsetVals.includes(offs)) {
       validFiles.push(i);
