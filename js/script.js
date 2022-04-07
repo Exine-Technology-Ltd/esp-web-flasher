@@ -1,6 +1,8 @@
 let espStub;
 
-const baudRates = [921600, 115200, 230400, 460800];
+const scannerFilter = {usbVendorId: 0x303A, usbProductId: 0x5740};
+
+const baudRates = [921600, 115200, 230400, 460800, 1200];
 
 const bufferSize = 512;
 const colors = ["#00a7e9", "#f89521", "#be1e2d"];
@@ -9,6 +11,7 @@ const measurementPeriodId = "0001";
 const maxLogLength = 100;
 const log = document.getElementById("log");
 const butConnect = document.getElementById("butConnect");
+const butReset = document.getElementById("butReset");
 const baudRate = document.getElementById("baudRate");
 const butClear = document.getElementById("butClear");
 const butErase = document.getElementById("butErase");
@@ -53,11 +56,23 @@ document.addEventListener("DOMContentLoaded", () => {
     notSupported.classList.add("hidden");
   }
 
+  autoResetScanner();
   initBaudRate();
   loadAllSettings();
   updateTheme();
   logMsg("ESP Web Flasher loaded.");
 });
+
+function autoResetScanner(){
+  let ports = await navigator.serial.getPorts();
+  for (let index = 0; index < ports.length; index++) {
+      const info = ports[index].getInfo();    
+      if(info.usbProductId == scannerFilter.usbProductId && info.usbVendorId == scannerFilter.usbVendorId){
+          alert("LTO Scanner Restting");
+          await ports[index].open({ baudRate: 1200 });
+      }
+  }
+}
 
 function initBaudRate() {
   for (let rate of baudRates) {
